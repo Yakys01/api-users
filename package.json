@@ -4,22 +4,24 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "bun run --watch src/index.ts",
-    "build": "bun build src/index.ts"
+    "build": "bun build src/index.ts",
+    "dr": "bun --env-file=.env run drizzle-kit"
   },
   "dependencies": {
-    "drizzle-orm": "^0.44.4",
+    "dotenv": "^17.2.2",
+    "drizzle-orm": "0.44.4",
     "elysia": "latest",
-    "elysia-compress": "^1.2.1",
-    "elysia-ip": "^1.0.10",
-    "elysia-rate-limit": "^4.4.0",
-    "elysiajs-cdn-cache": "^0.0.13",
-    "pg": "^8.16.3"
+    "elysia-compress": "1.2.1",
+    "elysia-ip": "1.0.10",
+    "elysia-rate-limit": "4.4.0",
+    "elysiajs-cdn-cache": "0.0.13",
+    "pg": "8.16.3"
   },
   "devDependencies": {
-    "@types/pg": "^8.15.5",
+    "@types/pg": "8.15.5",
     "bun-types": "latest",
-    "drizzle-kit": "^0.31.4",
-    "tsx": "^4.20.5"
+    "drizzle-kit": "0.31.4",
+    "tsx": "4.20.5"
   },
   "module": "src/index.js"
 }

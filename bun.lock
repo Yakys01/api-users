@@ -4,19 +4,20 @@
     "": {
       "name": "app",
       "dependencies": {
-        "drizzle-orm": "^0.44.4",
+        "dotenv": "^17.2.2",
+        "drizzle-orm": "0.44.4",
         "elysia": "latest",
-        "elysia-compress": "^1.2.1",
-        "elysia-ip": "^1.0.10",
-        "elysia-rate-limit": "^4.4.0",
-        "elysiajs-cdn-cache": "^0.0.13",
-        "pg": "^8.16.3",
+        "elysia-compress": "1.2.1",
+        "elysia-ip": "1.0.10",
+        "elysia-rate-limit": "4.4.0",
+        "elysiajs-cdn-cache": "0.0.13",
+        "pg": "8.16.3",
       },
       "devDependencies": {
-        "@types/pg": "^8.15.5",
+        "@types/pg": "8.15.5",
         "bun-types": "latest",
-        "drizzle-kit": "^0.31.4",
-        "tsx": "^4.20.5",
+        "drizzle-kit": "0.31.4",
+        "tsx": "4.20.5",
       },
     },
   },
@@ -104,6 +105,8 @@
     "csstype": ["csstype@3.1.3", "", {}, "sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw=="],
 
     "debug": ["debug@4.3.4", "", { "dependencies": { "ms": "2.1.2" } }, "sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ=="],
+
+    "dotenv": ["dotenv@17.2.2", "", {}, "sha512-Sf2LSQP+bOlhKWWyhFsn0UsfdK/kCWRv1iuA2gXAwt3dyNabr6QSj00I2V10pidqz69soatm9ZwZvpQMTIOd5Q=="],
 
     "drizzle-kit": ["drizzle-kit@0.31.4", "", { "dependencies": { "@drizzle-team/brocli": "^0.10.2", "@esbuild-kit/esm-loader": "^2.5.5", "esbuild": "^0.25.4", "esbuild-register": "^3.5.0" }, "bin": { "drizzle-kit": "bin.cjs" } }, "sha512-tCPWVZWZqWVx2XUsVpJRnH9Mx0ClVOf5YUHerZ5so1OKSlqww4zy1R5ksEdGRcO3tM3zj0PYN6V48TbQCL1RfA=="],
 

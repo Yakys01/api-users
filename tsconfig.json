@@ -95,7 +95,7 @@
         "skipLibCheck": true, /* Skip type checking all .d.ts files. */
         "baseUrl": "./",
         "paths": {
-            "@*": [
+            "@/": [
                 "src/*"
             ],
             "@d/*": [
@@ -122,11 +122,10 @@
         "**/*.d.ts",
         "src/**/*",
         "drizzle.config.ts",
-        "drizzle/schema/**/*",
+        "drizzle/schemas/**/*",
         "drizzle/seeds/**/*"
-        // "seeds/**/*", 
+        // "seeds/**/*",
     ],
     "exclude": [
-        "drizzle.config.ts"
     ] /* Skip type checking all .d.ts files. */
 }

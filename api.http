@@ -1,0 +1,14 @@
+@host = localhost
+@port = 4000
+@hostname = {{host}}:{{port}}
+@baseUrl = http://{{hostname}}
+
+
+### Get start server
+GET {{baseUrl}}/
+###
+
+### Test Database Connection
+GET {{baseUrl}}/connection
+
+###
