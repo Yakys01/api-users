@@ -113,8 +113,8 @@
             "@utils/*": [
                 "src/utils/*"
             ],
-            "@app/*": [
-                "src/app/*"
+            "@api/*": [
+                "src/api/*"
             ]
         }
     },
