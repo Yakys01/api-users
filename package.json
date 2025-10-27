@@ -10,6 +10,7 @@
   "dependencies": {
     "dotenv": "^17.2.2",
     "drizzle-orm": "0.44.4",
+    "drizzle-valibot": "0.4.2",
     "elysia": "latest",
     "elysia-compress": "1.2.1",
     "elysia-ip": "1.0.10",

@@ -1,3 +1,4 @@
+import { apiSchema } from "@api/api.schema";
 import { t } from 'elysia';
 
 const userSchema = {
@@ -43,3 +44,5 @@ const userPostSchema = {
 };
 
 export { userSchema, userPostSchema }
+
+type TypeUserSchema = SchemaType<typeof userSchema>;

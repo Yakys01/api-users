@@ -9,6 +9,6 @@ GET {{baseUrl}}/
 ###
 
 ### Test Database Connection
-GET {{baseUrl}}/connection
+GET {{baseUrl}}/user/info/74241735
 
 ###
