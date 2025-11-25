@@ -3,7 +3,7 @@ import { pgTable, integer, unique, text, smallint, date } from "drizzle-orm/pg-c
 
 const users = pgTable("users", {
     id: integer().primaryKey().generatedAlwaysAsIdentity(),
-    document: integer(),
+    document: integer().notNull(),
     father_lastname: text(),
     mother_lastname: text(),
     names: text(),

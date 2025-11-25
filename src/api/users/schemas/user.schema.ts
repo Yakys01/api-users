@@ -1,41 +1,25 @@
-import { apiSchema } from "@api/api.schema";
 import { t } from 'elysia';
 
 const userSchema = {
     input: t.Object({
-        document: t.String({ maxLength: 8, minLength: 8 }),
+        document: t.String({ pattern: '^[0-9]{8}$', error: 'document is required' }),
     }),
     output: t.Object({
-        fullname: t.Optional(t.String()),
-        // names: t.String(),
-        // surname: t.String(),
-        // document: t.String(),
-        // age: t.Number(),
-        // birth_date: t.String(),
-        // address: t.String(),
-        // ubigeo: t.String(),
-        // gender: t.String(),
-        // civil_status: t.String(),
-        // department: t.String(),
-        // province: t.String(),
-        // district: t.String(),
-        // digit_ruc: t.String(),
-        // ruc_10: t.String(),
-        // _redirects: t.Object({
-        //     user: t.String(), // enlace de informacion de usuario
-        //     user_ruc_10: t.String(), // enlace de informacion de usuario ruc
-        // })
+        names: t.Nullable(t.String()),
+        father_lastname: t.Nullable(t.String()),
+        mother_lastname: t.Nullable(t.String()),
+        document: t.String(),
+        address: t.Nullable(t.String()),
+        civil_status: t.Nullable(t.String()),
+        birth_date: t.Nullable(t.String()),
+        gender: t.String(),
+        fullname: t.String(),
+        age: t.Nullable(t.Number()),
+        department: t.Nullable(t.String()),
+        province: t.Nullable(t.String()),
+        district: t.Nullable(t.String()),
     })
 };
-
-const userCompanySchema = {
-    input: t.Object({
-        ruc: t.String()
-    }),
-    output: t.Object({
-
-    })
-}
 
 const userPostSchema = {
     input: t.Object({
