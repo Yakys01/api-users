@@ -3,6 +3,7 @@ const { users } = schema;
 
 type TypeInsertUser = InferInsertModel<typeof users>;
 type TypeCreateUser = Omit<TypeInsertUser, "username">;
+export type TypeApiUpdateUser = Omit<TypeInsertUser, "id" | "father" | "mother" | "expiration_date" | "issue_date" | "registration_date">;
 type TypeSelectUser = InferSelectModel<typeof users>;
 
 export default class {
@@ -112,28 +113,15 @@ export default class {
 
 
     /**
-     * Crear usuario
+     * Update de  usuario de datos 
      * @param data
      * @returns
      */
-    /*     async createUser(data: { user: TypeCreateUser }) {
-            const dataUser = {
-                ...data.user,
-                username: this._generateAnUsername(data.user.name),
-            };
-    
-            return db.transaction(async (tx) => {
-                const [sql] = await tx.insert(users).values(dataUser).returning({ userId: users.id });
-                const dataOauthAccount = {
-                    ...data.oauthaccount,
-                    userId: sql.userId,
-                };
-                await tx.insert(oauthAccount).values(dataOauthAccount);
-    
-                return {
-                    id: sql.userId,
-                    ...data.user
-                };
-            });
-        } */
+    async updateApiUser(data: TypeApiUpdateUser) {
+        const { document, ...restData } = data;
+
+        return await db.update(users)
+            .set(restData)
+            .where(d.eq(users.document, data.document));
+    }
 }

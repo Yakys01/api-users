@@ -23,10 +23,20 @@ const userSchema = {
 
 const userPostSchema = {
     input: t.Object({
+        names: t.Nullable(t.String()),
+        father_lastname: t.Nullable(t.String()),
+        mother_lastname: t.Nullable(t.String()),
         document: t.String(),
+        address: t.Nullable(t.String()),
+        civil_status: t.Nullable(t.String()),
+        birth_date: t.Nullable(t.String()),
+        digit_ruc: t.Nullable(t.String()),
+        gender: t.Nullable(t.String()),
+        address_ubigeo: t.Nullable(t.String()),
     })
 };
 
 export { userSchema, userPostSchema }
 
 type TypeUserSchema = SchemaType<typeof userSchema>;
+export type TypeUserPostSchema = SchemaType<typeof userPostSchema>;
