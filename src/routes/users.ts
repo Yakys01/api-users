@@ -23,9 +23,10 @@ export default router({ name: 'users', prefix: '/user' })
         const { params } = req;
         
         const apicollector = new ApiProvider(params.document);
-        
-        apicollector.run();
+        const data = await apicollector.run();
 
+        console.log(data);
+        
         return {
             data: 'nice'
         }

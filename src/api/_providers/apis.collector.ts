@@ -241,7 +241,7 @@ class ApiBuilder {
     _object(data: unknown) {
         const { search } = this._response;
         let current: any = data;
-        const keys = search.split('.');
+        const keys = search.length ? search.split('.'): [];
 
         for (const key of keys) {
             if (current === null || current === undefined) {
