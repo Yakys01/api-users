@@ -12,4 +12,4 @@ GET {{baseUrl}}/
 GET {{baseUrl}}/user/info/74241734
 
 ### Get An Company
-GET {{baseUrl}}/company/info/20614963540
+GET {{baseUrl}}/user/collector/74241734

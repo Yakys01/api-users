@@ -5,6 +5,9 @@ import { models } from "@routes/models.route";
 import UserController from "@api/users/controllers/user.controller";
 const user_controller = new UserController();
 
+// providers
+import ApiProvider from "@api/_providers/apis.collector";
+
 export default router({ name: 'users', prefix: '/user' })
     .use(models)
     .get('/info/:document', async (req) => {
@@ -15,4 +18,15 @@ export default router({ name: 'users', prefix: '/user' })
     }, {
         params: 'user.input',
         response: 'user.output'
-    });
+    })
+    .get('/collector/:document', async (req) => {
+        const { params } = req;
+        
+        const apicollector = new ApiProvider(params.document);
+        
+        apicollector.run();
+
+        return {
+            data: 'nice'
+        }
+    })
