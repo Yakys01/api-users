@@ -340,13 +340,13 @@ export default class {
 
         const mapResults = mapResponses.reduce((acc, result) => {
             if (result.status === 'fulfilled') {
-                acc.push(result.value);
+                acc.push(result.value as TypeResponseCollector);
             } else {
                 // Registrar errores para debugging
                 console.warn('API failed:', result.reason);
             }
             return acc;
-        }, [] as unknown[]);
+        }, [] as TypeResponseCollector[]);
 
         return mapResults;
     }
