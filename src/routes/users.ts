@@ -5,8 +5,11 @@ import { models } from "@routes/models.route";
 import UserController from "@api/users/controllers/user.controller";
 const user_controller = new UserController();
 
-// providers
-import ApiProvider from "@api/_providers/apis.collector";
+// services
+// import ApiProvider from "@api/_providers/apis.collector";
+import CollectorService from "@api/_services/collector.service";
+
+const collectorService = new CollectorService();
 
 export default router({ name: 'users', prefix: '/user' })
     .use(models)
@@ -22,10 +25,7 @@ export default router({ name: 'users', prefix: '/user' })
     .get('/collector/:document', async (req) => {
         const { params } = req;
         
-        const apicollector = new ApiProvider(params.document);
-        const data = await apicollector.run();
-
-        console.log(data);
+        const apicollector = await collectorService._collector(params.document, "user");
         
         return {
             data: 'nice'

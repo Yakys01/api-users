@@ -1,3 +1,5 @@
+import type { TypeUserPostSchema } from "@api/users/schemas/user.schema";
+
 /**
  * Representa la configuración de una petición HTTP.
  */
@@ -27,24 +29,17 @@ interface TypeApiResponse {
 interface TypeFechtCollector {
     _type: 'user' | 'company',
     _request: TypeApiRequest,
+    _replacements_user: Partial<Record<keyof TypeUserPostSchema['input'], string>>,
+    _replacements_company: Partial<Record<string, string>>,
     _response: TypeApiResponse
 }
 
-
-/**
- * Mapeo de campos para reemplazos en respuestas de API.
- */
-const API_REPLACEMENTS = {
-    names: ['nombres'],
-    father_lastname: ['apellido_paterno'],
-    mother_lastname: ['apellido_materno'],
-    document: ['id'],
-    civil_status: [],
-    birth_date: [],
-    digit_ruc: [],
-    gender: [],
-    address_ubigeo: [],
+interface TypeResponseCollector {
+    current: unknown,
+    replacement: Record<string, unknown>,
+    data: unknown
 }
+
 
 /**
  * Lista de colecciones de APIs para recolectar datos.
@@ -52,6 +47,7 @@ const API_REPLACEMENTS = {
 const API_COLLECTIONS: TypeFechtCollector[] = [
     {
         _type: 'user',
+       
         _request: {
             url: "https://consultadni.com/php/notaria_api_proxy.php",
             method: "POST",
@@ -70,6 +66,15 @@ const API_COLLECTIONS: TypeFechtCollector[] = [
                 "Referer": "https://consultadni.com/"
             },
             body: "{\"dni\":\"{document}\"}"
+        },
+        _replacements_user: {
+            document: 'id',
+            names: 'nombres',
+            father_lastname: 'apellido_paterno',
+            mother_lastname: 'apellido_materno',
+            gender: 'genero',
+            birth_date: 'fecha_nacimiento',
+            digit_ruc: 'codigo_verificacion'
         },
         _response: {
             type: 'object',
@@ -98,6 +103,12 @@ const API_COLLECTIONS: TypeFechtCollector[] = [
                 "Referer": "https://consultas.axusperu.com/consulta-dni.php"
             },
             body: "dni={document}"
+        },
+        _replacements_user: {
+            document: 'numeroDocumento',
+            names: 'nombres',
+            father_lastname: 'apellidoPaterno',
+            mother_lastname: 'apellidoMaterno',
         },
         _response: {
             type: 'object',
@@ -141,6 +152,7 @@ class ApiBuilder {
     private _document: string;
     private requestfetch: Promise<Response> | undefined;
     private responsefetch: unknown;
+    private _replacements: Record<string, string>
 
     /**
      * Inicializa el constructor con configuración de petición y documento.
@@ -148,10 +160,13 @@ class ApiBuilder {
      * @param fetchResponse Configuración de la respuesta.
      * @param document Documento a usar en la petición.
      */
-    constructor(fetchRequest: TypeApiRequest, fetchResponse: TypeApiResponse, document: string) {
+    constructor(api: TypeFechtCollector, document: string, type: TypeFechtCollector["_type"]) {
+        const {_request, _response } = api 
+        
+        this._request = _request;
+        this._response = _response;
+        this._replacements = (type === 'user' ) ? api._replacements_user : api._replacements_company;
 
-        this._request = fetchRequest;
-        this._response = fetchResponse;
         this._document = document;
         this.requestfetch = undefined;
         this.responsefetch = undefined;
@@ -200,6 +215,20 @@ class ApiBuilder {
         })
     }
 
+    _replacementsColumns(current: Record<string, unknown>) {
+        let datareplacement:Record<string, unknown> = {};
+
+        for (const prop in this._replacements) {
+            const _prop_value = this._replacements[prop];
+            const _value = current[_prop_value];
+            
+            // push to tree
+            datareplacement[prop] = _value;
+        }
+
+        return datareplacement;
+    }
+
     /**
      * Procesa datos como string (no implementado).
      * @param data Datos a procesar.
@@ -228,6 +257,7 @@ class ApiBuilder {
 
         return {
             current,
+            replacement: this._replacementsColumns(current),
             data
         };
 
@@ -241,7 +271,7 @@ class ApiBuilder {
     _object(data: unknown) {
         const { search } = this._response;
         let current: any = data;
-        const keys = search.length ? search.split('.'): [];
+        const keys = search.length ? search.split('.') : [];
 
         for (const key of keys) {
             if (current === null || current === undefined) {
@@ -252,6 +282,7 @@ class ApiBuilder {
 
         return {
             current,
+            replacement: this._replacementsColumns(current),
             data
         };
     }
@@ -284,24 +315,24 @@ class ApiBuilder {
  */
 export default class {
 
-    private document: string;
-
+    private identification: string;
+    private type: TypeFechtCollector["_type"];
     /**
      * Inicializa con el documento a consultar.
      * @param document Documento para las consultas.
      */
-    constructor(document: string) {
-        this.document = document;
+    constructor(document: string, type: TypeFechtCollector["_type"]) {
+        this.type = type;
+        this.identification = document;
     }
 
     /**
      * Ejecuta todas las colecciones de APIs y retorna resultados exitosos.
      * @returns Array de resultados procesados.
      */
-    async run(): Promise<unknown[]> {
+    async run(): Promise<TypeResponseCollector[]> {
         const mapCollections = API_COLLECTIONS.map((api) => {
-            const { _request, _response } = api;
-            const apibuilder = new ApiBuilder(_request, _response, this.document);
+            const apibuilder = new ApiBuilder(api, this.identification, this.type); // load to value
             return apibuilder.run();
         });
 

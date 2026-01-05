@@ -26,7 +26,7 @@ const userPostSchema = {
         names: t.Nullable(t.String()),
         father_lastname: t.Nullable(t.String()),
         mother_lastname: t.Nullable(t.String()),
-        document: t.String(),
+        document: t.String( { pattern: '^[0-9]{8}$', error: 'document is required'} ),
         address: t.Nullable(t.String()),
         civil_status: t.Nullable(t.String()),
         birth_date: t.Nullable(t.String()),
